@@ -1,0 +1,232 @@
+/* Correções críticas — produção / Netlify */
+
+/* Conteúdo visível mesmo se JS falhar ou atrasar */
+.reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+html.js-ready .reveal:not(.is-visible) {
+  opacity: 0;
+  transform: translateY(1.1rem);
+}
+
+html.js-ready .reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fundo escuro imediato (evita flash branco) */
+body.has-weather-fade {
+  color: rgba(244, 248, 255, 0.96);
+  background: #0c1522 !important;
+}
+
+body.theme-dark,
+body.user-dark {
+  color: rgba(244, 248, 255, 0.96);
+}
+
+/* Header: nav NÃO pode flutuar fora do masthead no desktop */
+.masthead {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: min(calc(100% - 2rem), var(--max-width)) !important;
+  margin: 0 auto !important;
+  z-index: 200 !important;
+}
+
+.page-shell {
+  padding-top: 1rem !important;
+}
+
+.masthead--compact .nav-row {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto auto !important;
+  align-items: center !important;
+  gap: 0.55rem 0.65rem !important;
+}
+
+.masthead--compact .header-group {
+  grid-column: 1 / -1;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 0.65rem !important;
+  min-width: 0 !important;
+}
+
+.masthead--compact .weather-search {
+  flex: 1 1 14rem !important;
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: 100% !important;
+}
+
+.masthead--compact .header-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+}
+
+.masthead--compact .site-nav {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  left: auto !important;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 0.2rem !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  grid-column: 2 / 3 !important;
+}
+
+.masthead--compact .site-nav a,
+.masthead--compact .site-nav button {
+  width: auto !important;
+  min-height: 2.35rem !important;
+  padding: 0.45rem 0.68rem !important;
+  font-size: 0.88rem !important;
+}
+
+.masthead--compact .menu-toggle {
+  display: none !important;
+}
+
+@media (max-width: 1100px) {
+  .masthead--compact .site-nav a span:last-child,
+  .masthead--compact .site-nav button span:last-child {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  .masthead--compact .site-nav {
+    grid-column: 1 / -1 !important;
+    justify-content: flex-start !important;
+  }
+}
+
+@media (max-width: 980px) {
+  .masthead--compact .menu-toggle {
+    display: inline-flex !important;
+  }
+
+  .masthead--compact .site-nav:not(.is-open) {
+    display: none !important;
+  }
+
+  .masthead--compact .site-nav.is-open {
+    position: fixed !important;
+    top: calc(0.5rem + 4.5rem) !important;
+    left: 0.5rem !important;
+    right: 0.5rem !important;
+    z-index: 520 !important;
+    display: grid !important;
+    gap: 0.45rem !important;
+    padding: 0.85rem !important;
+    border-radius: 20px !important;
+    background: rgba(10, 18, 30, 0.98) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55) !important;
+  }
+
+  .masthead--compact .site-nav.is-open a {
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
+
+  .masthead--compact .site-nav.is-open a span:last-child {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    clip: auto !important;
+  }
+}
+
+/* Overlay de página sem cobrir conteúdo */
+body.has-weather-fade .page-shell::before {
+  display: none !important;
+}
+
+/* Busca de cidade: resultados acima do conteúdo */
+.weather-search .search-results {
+  z-index: 300;
+}
+
+.theme-toggle {
+  display: inline-flex !important;
+}
+
+.photo-scene__celestial,
+.photo-scene__stars {
+  display: none !important;
+}
+
+.photo-scene {
+  overflow: hidden;
+  background:
+    var(
+      --scene-fallback,
+      linear-gradient(180deg, #5f9ed0 0%, #b8d8ed 46%, #47704a 47%, #1f432f 100%)
+    ) !important;
+}
+
+.photo-scene__image {
+  background-color: transparent !important;
+  opacity: 1 !important;
+  filter:
+    saturate(calc(var(--scene-saturation, 1.08) * 1.08))
+    contrast(calc(var(--scene-contrast, 1.05) * 1.08))
+    brightness(var(--scene-brightness, 1)) !important;
+}
+
+.photo-scene.scene-fallback-only .photo-scene__image {
+  display: none !important;
+}
+
+.photo-scene__shade {
+  background:
+    radial-gradient(circle at 72% 16%, rgba(255, 232, 174, 0.2), rgba(255, 232, 174, 0) 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(8, 16, 27, 0.1) 42%, rgba(5, 11, 19, 0.4) 100%),
+    linear-gradient(180deg, rgba(14, 25, 38, calc(var(--scene-darkness, 0) * 0.92)), rgba(14, 25, 38, calc(var(--scene-darkness, 0) * 1.35))) !important;
+}
+
+.photo-scene.is-cloudy .photo-scene__shade,
+.photo-scene.is-fog .photo-scene__shade,
+.photo-scene.is-snow .photo-scene__shade {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(33, 48, 63, 0.14) 42%, rgba(6, 13, 22, 0.46) 100%),
+    linear-gradient(180deg, rgba(14, 25, 38, calc(var(--scene-darkness, 0) * 1.05)), rgba(14, 25, 38, calc(var(--scene-darkness, 0) * 1.48))) !important;
+}
+
+.photo-scene.is-rain .photo-scene__shade,
+.photo-scene.is-drizzle .photo-scene__shade,
+.photo-scene.is-storm .photo-scene__shade {
+  background:
+    linear-gradient(180deg, rgba(10, 20, 32, 0.1), rgba(10, 20, 32, 0.28) 42%, rgba(3, 8, 15, 0.62) 100%),
+    linear-gradient(180deg, rgba(14, 25, 38, calc(var(--scene-darkness, 0) * 1.12)), rgba(14, 25, 38, calc(var(--scene-darkness, 0) * 1.58))) !important;
+}
+
+.photo-scene__atmosphere {
+  opacity: 0.42 !important;
+}
+
+.photo-scene.is-fog .photo-scene__atmosphere,
+.photo-scene.is-snow .photo-scene__atmosphere {
+  opacity: 0.52 !important;
+}

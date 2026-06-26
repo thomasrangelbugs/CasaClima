@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(self)">
+  <meta name="theme-color" content="#08131f">
+  <title>CasaClima | Gastos</title>
+  <meta
+    name="description"
+    content="Página de gastos da casa com renda, despesas, contas, observações e exportação."
+  >
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%232f8fff'/%3E%3Cstop offset='1' stop-color='%23ff9f68'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='url(%23g)'/%3E%3Cpath d='M16 36c0-8.837 7.163-16 16-16 7.27 0 13.41 4.852 15.36 11.49 3.86.63 6.64 3.87 6.64 7.76 0 4.42-3.58 8-8 8H23c-3.866 0-7-3.134-7-7 0-2.09.918-3.966 2.374-5.25A9.96 9.96 0 0 1 16 36Z' fill='white' opacity='.95'/%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="preconnect" href="https://images.pexels.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="js/scene-head.js"></script>
+  <link rel="stylesheet" href="css/bundle.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="js/scene-assets.js"></script>
+  <script defer src="js/common.js"></script>
+  <script defer src="js/budget.js"></script>
+</head>
+<body class="theme-dark user-dark has-weather-fade scene-ready page-gastos">
+  <!-- @partial shell-top -->
+  <!-- @partial header -->
+
+  <main>
+      <section class="section page-content" id="gastos">
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow">Financeiro residencial</p>
+            <h2>Planejamento do mês</h2>
+          </div>
+        </div>
+
+        <div class="budget-workspace reveal">
+          <div class="budget-tab-bar glass" id="budgetTabBar" role="tablist" aria-label="Visões do orçamento">
+            <button
+              class="budget-tab is-active"
+              id="budgetEntryTab"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="budgetEntryPanel"
+              data-budget-tab-button="entries"
+            >
+              Lançamentos
+            </button>
+            <button
+              class="budget-tab"
+              id="budgetDashboardTab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="budgetDashboardPanel"
+              data-budget-tab-button="dashboard"
+              tabindex="-1"
+            >
+              Dashboards e resumos
+            </button>
+          </div>
+
+          <section
+            class="budget-tab-panel is-active"
+            id="budgetEntryPanel"
+            data-budget-tab-panel="entries"
+            role="tabpanel"
+            aria-labelledby="budgetEntryTab"
+          >
+            <div class="budget-entry-layout">
+              <article class="budget-panel glass">
+                <section class="list-block list-block--hero">
+                  <div class="list-block__header">
+                    <div>
+                      <h3>Base do mês</h3>
+                    </div>
+                  </div>
+
+                  <div class="budget-top-row budget-top-row--entry">
+                    <label class="field">
+                      <span>Renda mensal</span>
+                      <input id="incomeInput" type="text" inputmode="decimal" placeholder="0,00">
+                    </label>
+
+                    <label class="field">
+                      <span>Meta de reserva</span>
+                      <input id="savingsGoalInput" type="text" inputmode="decimal" placeholder="0,00">
+                    </label>
+                  </div>
+                </section>
+
+                <section class="list-block list-block--accent">
+                  <div class="list-block__header">
+                    <div>
+                      <h3>Contas fixas da casa</h3>
+                    </div>
+                    <button class="button secondary slim" id="addBillButton" type="button">Nova conta fixa</button>
+                  </div>
+                  <div class="stack-list" id="billList"></div>
+                </section>
+
+                <section class="list-block">
+                  <div class="list-block__header">
+                    <div>
+                      <h3>Despesas variáveis</h3>
+                    </div>
+                    <button class="button secondary slim" id="addExtraExpenseButton" type="button">Adicionar lançamento</button>
+                  </div>
+                  <div class="stack-list" id="extraExpensesList"></div>
+                </section>
+
+                <details class="budget-advanced">
+                  <summary>Planejamento por categoria</summary>
+                  <div class="budget-advanced__actions">
+                    <button class="button secondary slim" id="addFixedCategoryButton" type="button">Categoria fixa</button>
+                    <button class="button ghost slim" id="addVariableCategoryButton" type="button">Categoria variável</button>
+                  </div>
+                  <div class="expense-grid" id="expenseGrid"></div>
+                </details>
+
+                <label class="field field--full">
+                  <span>Observações gerais</span>
+                  <textarea id="budgetNotes" rows="4" placeholder="Anote ajustes, contas que vão mudar e pontos para revisar no próximo mês."></textarea>
+                </label>
+              </article>
+
+              <aside class="budget-side-stack">
+                <article class="budget-side-card glass">
+                  <h3>Contas básicas</h3>
+                  <div class="budget-chip-list" aria-label="Contas básicas pré-cadastradas">
+                    <span>Água</span>
+                    <span>Luz</span>
+                    <span>Gás</span>
+                    <span>Internet</span>
+                    <span>Celular</span>
+                  </div>
+                </article>
+
+                <article class="budget-side-card glass">
+                  <h3>Resumo rápido</h3>
+                  <div class="budget-side-metric">
+                    <span>Saldo livre</span>
+                    <strong id="budgetQuickBalance">R$ 0,00</strong>
+                  </div>
+                  <div class="budget-side-metric">
+                    <span>Próximo vencimento</span>
+                    <strong id="budgetQuickNextBill">Sem vencimento</strong>
+                  </div>
+                </article>
+              </aside>
+            </div>
+          </section>
+
+          <section
+            class="budget-tab-panel"
+            id="budgetDashboardPanel"
+            data-budget-tab-panel="dashboard"
+            role="tabpanel"
+            aria-labelledby="budgetDashboardTab"
+            hidden
+          >
+            <div class="budget-dashboard-layout" id="budgetExportArea">
+              <div class="budget-dashboard-header">
+                <div>
+                  <h3>Dashboards e resumos do mês</h3>
+                </div>
+
+                <details class="export-panel">
+                  <summary>Exportar painel</summary>
+                  <div class="export-actions">
+                    <button class="button ghost slim" type="button" data-export="pdf">PDF</button>
+                    <button class="button ghost slim" type="button" data-export="image">Imagem</button>
+                    <button class="button ghost slim" type="button" data-export="word">Word</button>
+                    <button class="button ghost slim" type="button" data-export="txt">TXT</button>
+                  </div>
+                </details>
+              </div>
+
+              <section class="budget-summary budget-summary--top glass">
+                <article class="summary-highlight budget-summary__main">
+                  <span>Total de gastos</span>
+                  <strong id="totalExpenses">R$ 0,00</strong>
+                </article>
+
+                <article class="summary-card secondary-card">
+                  <span>Fixas</span>
+                  <strong id="essentialExpenses">R$ 0,00</strong>
+                </article>
+                <article class="summary-card secondary-card">
+                  <span>Variáveis</span>
+                  <strong id="variableExpenses">R$ 0,00</strong>
+                </article>
+                <article class="summary-card secondary-card">
+                  <span>Saldo livre</span>
+                  <strong id="budgetBalance">R$ 0,00</strong>
+                </article>
+                <article class="summary-card secondary-card">
+                  <span>Meta coberta</span>
+                  <strong id="goalCoverage">0%</strong>
+                </article>
+
+                <article class="meter-card budget-summary__meter">
+                  <div class="meter-header">
+                    <span>Comprometimento da renda</span>
+                    <strong id="commitmentValue">0%</strong>
+                  </div>
+                  <div class="meter">
+                    <span id="commitmentMeter"></span>
+                  </div>
+                </article>
+
+                <article class="insight-card budget-summary__insight">
+                  <h3>Leitura rápida</h3>
+                  <p id="budgetInsight">
+                    Informe a renda e preencha os campos para o painel mostrar alertas e oportunidades de economia.
+                  </p>
+                </article>
+
+                <article class="insight-card budget-summary__bill" id="nextBillCard">
+                  <h3>Próximo vencimento</h3>
+                  <p id="nextBillText">Nenhuma conta cadastrada ainda.</p>
+                </article>
+              </section>
+
+              <div class="budget-dashboard-grid">
+                <article class="budget-dashboard-card glass budget-dashboard-card--wide">
+                  <div class="block-heading">
+                    <div>
+                      <h3>Distribuição do orçamento</h3>
+                    </div>
+                  </div>
+                  <div class="budget-chart-wrap">
+                    <canvas id="budgetChart" aria-label="Gráfico de distribuição do orçamento" role="img"></canvas>
+                  </div>
+                </article>
+
+                <article class="budget-dashboard-card glass">
+                  <div class="block-heading">
+                    <div>
+                      <h3>Contas fixas</h3>
+                    </div>
+                  </div>
+                  <ul class="budget-dashboard-list" id="fixedDashboardList"></ul>
+                </article>
+
+                <article class="budget-dashboard-card glass">
+                  <div class="block-heading">
+                    <div>
+                      <h3>Despesas variáveis</h3>
+                    </div>
+                  </div>
+                  <ul class="budget-dashboard-list" id="variableDashboardList"></ul>
+                </article>
+
+                <article class="budget-dashboard-card glass">
+                  <div class="block-heading">
+                    <div>
+                      <h3>Categorias opcionais</h3>
+                    </div>
+                  </div>
+                  <ul class="budget-dashboard-list" id="categoryDashboardList"></ul>
+                </article>
+
+                <article class="budget-dashboard-card budget-dashboard-card--wide glass">
+                  <div class="block-heading">
+                    <div>
+                      <h3>Observações do mês</h3>
+                    </div>
+                  </div>
+                  <p class="budget-notes-preview" id="budgetNotesPreview">
+                    Sem observações registradas. Use este espaço para lembretes e ajustes do próximo mês.
+                  </p>
+                </article>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+        <!-- @partial footer -->
+  <!-- @partial scripts-core -->
+</body>
+</html>

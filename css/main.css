@@ -1,0 +1,11 @@
+/* CasaClima — ponto de entrada CSS modular */
+
+@import "./critical-scene.css";
+@import "./layout.css";
+@import "./components.css";
+@import "./legacy.css";
+@import "./pages.css";
+@import "./accessibility.css";
+@import "./features.css";
+@import "./remake.css";
+@import "./fixes-production.css";

@@ -1,0 +1,99 @@
+/* Layout: estrutura, grid, header, navegação */
+
+:root {
+  --header-offset: 7.9rem;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: clip;
+}
+
+main,
+.site-footer,
+.masthead {
+  width: min(calc(100% - 2rem), var(--max-width));
+  margin: 0 auto;
+}
+
+.page-shell {
+  position: relative;
+  z-index: 1;
+  padding-top: 1.35rem;
+  padding-bottom: 3rem;
+}
+
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.header-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  flex: 1 1 16rem;
+}
+
+.header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-shrink: 0;
+}
+
+.weather-search {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 0.45rem;
+  width: min(24rem, 100%);
+  flex: 1 1 18rem;
+  min-width: 0;
+}
+
+.lang-toggle {
+  min-width: 2.6rem;
+}
+
+@media (min-width: 981px) {
+  .masthead--compact .nav-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+  }
+
+  .masthead--compact .site-nav {
+    grid-column: auto;
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 980px) {
+  .weather-search {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .header-group {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 640px) {
+  .weather-search {
+    grid-template-columns: 1fr;
+  }
+
+  .weather-search .button {
+    width: 100%;
+  }
+}

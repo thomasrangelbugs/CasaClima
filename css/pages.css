@@ -1,0 +1,48 @@
+/* Páginas e temas */
+
+body.theme-light {
+  --bg-1: #f7fbff;
+  --bg-2: #edf6ff;
+  --bg-3: #fff8ef;
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-strong: rgba(255, 255, 255, 0.94);
+  --text-main: #173042;
+  --text-soft: #5d7287;
+  --border: rgba(23, 48, 66, 0.12);
+  color: var(--text-main);
+  background: linear-gradient(180deg, var(--bg-1), var(--bg-2) 48%, var(--bg-3));
+}
+
+body.theme-light.user-light .masthead,
+body.theme-light.user-light .glass,
+body.theme-light.user-light .quick-link-card {
+  background: rgba(255, 255, 255, 0.86) !important;
+  border-color: rgba(23, 48, 66, 0.1) !important;
+  color: var(--text-main);
+}
+
+body.theme-light.user-light .site-nav a {
+  color: var(--text-soft);
+}
+
+body.theme-light.user-light .weather-hero {
+  color: #173042;
+  text-shadow: none;
+}
+
+body.theme-light.user-light .photo-scene::after {
+  opacity: 0.35;
+}
+
+.page-gastos .budget-chart-wrap canvas {
+  max-height: 16rem;
+}
+
+.page-utilidades .route-dashboard {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.page-cofre .vault-layout[hidden] {
+  display: none !important;
+}

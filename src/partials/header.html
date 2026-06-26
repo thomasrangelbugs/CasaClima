@@ -1,0 +1,39 @@
+    <header class="masthead masthead--compact glass">
+      <div class="nav-row">
+        <div class="header-group">
+          <a class="brand" href="index.html">
+            <strong>CasaClima</strong>
+          </a>
+          <form class="weather-search" id="weatherSearchForm" role="search" aria-label="Buscar cidade">
+            <label class="sr-only" for="weatherSearchInput" data-i18n="search.cityLabel">Buscar cidade</label>
+            <input
+              id="weatherSearchInput"
+              type="search"
+              placeholder="Buscar cidade..."
+              data-i18n-placeholder="search.cityPlaceholder"
+              autocomplete="off"
+            >
+            <button class="button secondary slim" type="button" id="currentLocationButton" data-i18n="search.gps">GPS</button>
+            <button class="button primary slim" type="submit" data-i18n="search.submit">Buscar</button>
+            <div class="search-results" id="searchResults" role="listbox" aria-label="Resultados da busca"></div>
+          </form>
+        </div>
+
+        <nav class="site-nav" id="siteNav" aria-label="Navegação principal">
+          {{navLinks}}
+        </nav>
+
+        <div class="header-actions">
+          <button class="button ghost slim lang-toggle" id="langToggle" type="button" aria-label="Alternar idioma" title="Idioma">PT</button>
+          <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav">
+            <span class="menu-toggle__bars" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+            <span class="menu-toggle__label" data-i18n="nav.menu">Menu</span>
+            <span class="sr-only" data-i18n="nav.openMenu">Abrir menu</span>
+          </button>
+        </div>
+      </div>
+    </header>

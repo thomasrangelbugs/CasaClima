@@ -1,0 +1,33 @@
+/* View Transitions + notificações */
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.32s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(root) {
+  animation-name: fade-scale-out;
+}
+
+::view-transition-new(root) {
+  animation-name: fade-scale-in;
+}
+
+@keyframes fade-scale-out {
+  to {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+}
+
+@keyframes fade-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(1.012);
+  }
+}

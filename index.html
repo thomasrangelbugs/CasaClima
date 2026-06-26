@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(self)">
+  <meta name="theme-color" content="#08131f">
+  <title>CasaClima | Início</title>
+  <meta
+    name="description"
+    content="Entrada do CasaClima com clima local e acesso rápido para gastos, notícias, cofre, rádio, utilidades e perfil."
+  >
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%232f8fff'/%3E%3Cstop offset='1' stop-color='%23ff9f68'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='url(%23g)'/%3E%3Cpath d='M16 36c0-8.837 7.163-16 16-16 7.27 0 13.41 4.852 15.36 11.49 3.86.63 6.64 3.87 6.64 7.76 0 4.42-3.58 8-8 8H23c-3.866 0-7-3.134-7-7 0-2.09.918-3.966 2.374-5.25A9.96 9.96 0 0 1 16 36Z' fill='white' opacity='.95'/%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="preconnect" href="https://images.pexels.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="js/scene-head.js"></script>
+  <link rel="stylesheet" href="css/bundle.css">
+  <script src="js/scene-assets.js"></script>
+  <script defer src="js/common.js"></script>
+</head>
+<body class="theme-dark user-dark has-weather-fade scene-ready page-home">
+  <!-- @partial shell-top -->
+    <!-- @partial header -->
+
+    <main class="home-main">
+      <section class="weather-hero" id="dashboard" aria-label="Clima atual">
+        <div class="weather-hero__content reveal">
+          <header class="weather-hero__top">
+            <p class="weather-hero__location" id="weatherLocationLabel">Carregando local...</p>
+            <time class="weather-hero__clock" id="currentClock">--:--</time>
+          </header>
+
+          <div class="weather-hero__primary">
+            <h1 class="sr-only" id="dailyHeadline">Clima local</h1>
+            <p class="weather-hero__temp" id="heroTemperature" aria-live="polite">--°</p>
+            <p class="weather-hero__range" id="dailyRange">Carregando...</p>
+            <p class="weather-hero__note" id="dailyInsight"></p>
+          </div>
+
+          <dl class="weather-hero__details">
+            <div><dt>Sensação</dt><dd id="metricFeels">--</dd></div>
+            <div><dt>Umidade</dt><dd id="metricHumidity">--</dd></div>
+            <div><dt>Vento</dt><dd id="metricWind">--</dd></div>
+            <div><dt>Chuva</dt><dd id="metricRainChance">--</dd></div>
+            <div><dt>Pressão</dt><dd id="metricPressure">--</dd></div>
+            <div><dt>Lua</dt><dd id="metricMoon">--</dd></div>
+            <div><dt>Estação</dt><dd id="metricSeason">--</dd></div>
+          </dl>
+
+          <div class="weather-hero__forecast" id="forecastGrid" aria-label="Próximos dias"></div>
+        </div>
+      </section>
+
+      <section class="section page-content home-intelligence" id="homeIntelligence" aria-label="Central inteligente">
+        <div class="section-heading section-heading--plain reveal">
+          <div>
+            <p class="eyebrow">Central inteligente</p>
+            <h2>Cockpit da casa</h2>
+          </div>
+          <div class="home-status-pill" id="homeConnectionStatus" aria-live="polite">Sincronizando</div>
+        </div>
+
+        <div class="home-command-layout reveal">
+          <section class="home-command-surface glass" aria-label="Busca de ações">
+            <div class="home-command-bar">
+              <span class="home-command-spark" aria-hidden="true"></span>
+              <input id="homeCommandInput" type="search" placeholder="Buscar ação ou recurso" autocomplete="off">
+              <button class="icon-button home-command-clear" id="homeCommandClear" type="button" aria-label="Limpar busca">x</button>
+            </div>
+            <p class="home-command-meta" id="homeCommandMeta">Ações sugeridas agora</p>
+            <div class="home-command-results" id="homeCommandResults"></div>
+          </section>
+
+          <aside class="home-live-stack" aria-label="Pulso do app">
+            <article class="home-live-card glass">
+              <span>Pulso da casa</span>
+              <strong id="homeHealthScore">--</strong>
+              <p id="homeDataPulse">Lendo sinais locais...</p>
+            </article>
+            <article class="home-live-card glass">
+              <span>Dados locais</span>
+              <strong id="homeStorageStatus">Local</strong>
+              <p id="homeDataPulseLabel">Privado no navegador</p>
+            </article>
+          </aside>
+        </div>
+
+        <div class="home-intel-grid reveal">
+          <article class="home-intel-card home-intel-card--wide glass">
+            <div class="home-card-header">
+              <div>
+                <span>Briefing</span>
+                <h3 id="homeBriefingSignal">Agora</h3>
+              </div>
+              <a class="button ghost slim" href="utilidades.html">Checklist</a>
+            </div>
+            <ol class="home-briefing-list" id="homeBriefingList"></ol>
+          </article>
+
+          <article class="home-intel-card glass">
+            <div class="home-card-header">
+              <div>
+                <span>Foco</span>
+                <h3 id="homeFocusAction">Prioridade do dia</h3>
+              </div>
+            </div>
+            <div class="home-snapshot-list">
+              <p><span>Clima</span><strong id="homeSnapshotWeather">Atualizando</strong></p>
+              <p><span>Gastos</span><strong id="homeSnapshotBudget">Sem leitura</strong></p>
+              <p><span>Tarefas</span><strong id="homeSnapshotTasks">0 pendente(s)</strong></p>
+            </div>
+          </article>
+
+          <div class="home-automation-grid" id="homeAutomationList" aria-label="Automações sugeridas"></div>
+        </div>
+      </section>
+
+      <section class="section page-content home-links">
+        <div class="section-heading section-heading--plain reveal">
+          <p class="eyebrow">Acesso rápido</p>
+          <h2>Áreas do app</h2>
+        </div>
+
+        <nav class="quick-link-grid reveal" aria-label="Áreas do app">
+          <a class="quick-link-card" href="gastos.html">
+            <strong class="quick-link-title icon--budget">Gastos</strong>
+            <span>Contas e orçamento</span>
+          </a>
+          <a class="quick-link-card" href="noticias.html">
+            <strong class="quick-link-title icon--news">Notícias</strong>
+            <span>Feeds por tema</span>
+          </a>
+          <a class="quick-link-card" href="cofre.html">
+            <strong class="quick-link-title icon--vault">Cofre</strong>
+            <span>Senhas locais</span>
+          </a>
+          <a class="quick-link-card" href="radio.html">
+            <strong class="quick-link-title icon--radio">Rádio</strong>
+            <span>Estações ao vivo</span>
+          </a>
+          <a class="quick-link-card" href="utilidades.html">
+            <strong class="quick-link-title icon--tools">Utilidades</strong>
+            <span>Mapa, checklist e contatos</span>
+          </a>
+          <a class="quick-link-card" href="cursos.html">
+            <strong class="quick-link-title icon--courses">Cursos</strong>
+            <span>Grátis por área</span>
+          </a>
+          <a class="quick-link-card" href="perfil.html">
+            <strong class="quick-link-title icon--profile">Perfil</strong>
+            <span>Saúde e rotina</span>
+          </a>
+        </nav>
+      </section>
+    </main>
+
+    <!-- @partial footer -->
+  <!-- @partial scripts-core -->
+</body>
+</html>

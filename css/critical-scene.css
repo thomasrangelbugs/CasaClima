@@ -1,0 +1,68 @@
+html {
+  background: #0c1522;
+}
+
+body.theme-dark,
+body.user-dark {
+  --weather-fade-deep: #0c1522;
+  --weather-fade-mid: #142436;
+  --weather-fade-soft: #1a2f4a;
+  --bg-1: #0c1522;
+  --bg-2: #142436;
+  --bg-3: #1a2f4a;
+  background: transparent;
+}
+
+.scene-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background: transparent;
+}
+
+.page-shell {
+  background: transparent;
+}
+
+.masthead {
+  border-radius: 999px;
+  overflow: visible;
+}
+
+@media (min-width: 981px) {
+  .masthead {
+    overflow: hidden;
+  }
+}
+
+/* Anti-flash: superfícies sutis em vez de transparente total */
+body.user-dark .masthead {
+  background: rgba(8, 14, 24, 0.72) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+
+body.user-dark .glass,
+body.user-dark .utility-card,
+body.user-dark .news-column,
+body.user-dark .budget-panel,
+body.user-dark .quick-link-card,
+body.user-dark .section-heading,
+body.user-dark .profile-card {
+  background: rgba(10, 18, 30, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+body.user-dark .site-nav {
+  background: rgba(10, 18, 30, 0.92) !important;
+}
+
+body.user-dark a,
+body.user-dark button,
+body.user-dark .quick-link-card,
+body.user-dark .site-nav a {
+  transition-property: color, transform, opacity, border-color, background, box-shadow !important;
+}
